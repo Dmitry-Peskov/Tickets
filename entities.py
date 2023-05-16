@@ -37,6 +37,9 @@ class Ticket:
         else:
             raise err.InvalidTicketState(value=state)
 
+    def __repr__(self):
+        return f'{self.__class__.__name__} № {self.__number}'
+
 
 class Incident(Ticket):
 
@@ -56,3 +59,29 @@ class Incident(Ticket):
             self.__priority = value
         else:
             raise err.InvalidTicketPriority
+
+    # TODO описать оставшиеся параметры класса
+
+
+class WaitingList:
+
+    def __init__(self):
+        self.__collection = []
+
+    def __repr__(self):
+        return str(self.__collection)
+
+    def add(self, ticket):
+        if issubclass(ticket.__class__, Ticket):
+            self.__collection.append(ticket)
+        else:
+            raise err.AddInWaitingListInvalidType(ticket)
+
+    def pop_left(self):
+        pass
+
+    def pop_right(self):
+        pass
+
+    def clear(self):
+        pass
