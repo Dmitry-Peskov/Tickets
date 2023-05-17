@@ -64,7 +64,7 @@ class Incident(Ticket):
         if value in attr.PRIORITY:
             self.__priority = value
         else:
-            raise err.InvalidTicketPriority
+            raise err.InvalidTicketPriority(value)
 
     # TODO описать оставшиеся параметры класса
 
@@ -86,13 +86,15 @@ class WaitingList:
         else:
             raise err.AddInWaitingListInvalidType(ticket)
 
-    def pop_left(self):
+    def pop_left(self) -> Incident:
         if len(self.__collection) != 0:
-            return self.__collection.pop(0)
+            inc = self.__collection.pop(0)
+            return inc
 
-    def pop_right(self):
+    def pop_right(self) -> Incident:
         if len(self.__collection) != 0:
-            return self.__collection.pop(-1)
+            inc = self.__collection.pop(-1)
+            return inc
 
     def clear(self):
         self.__collection.clear()
