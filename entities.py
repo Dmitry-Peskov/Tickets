@@ -40,6 +40,12 @@ class Ticket:
     def __repr__(self):
         return f'{self.__class__.__name__} № {self.__number}'
 
+    def __eq__(self, other):
+        return self.number == other.number
+
+    def __ne__(self, other):
+        return self.number != other.number
+
 
 class Incident(Ticket):
 
@@ -71,6 +77,9 @@ class WaitingList:
     def __repr__(self):
         return str(self.__collection)
 
+    def __iter__(self):
+        return iter(self.__collection[:])
+
     def add(self, ticket):
         if issubclass(ticket.__class__, Ticket):
             self.__collection.append(ticket)
@@ -78,10 +87,12 @@ class WaitingList:
             raise err.AddInWaitingListInvalidType(ticket)
 
     def pop_left(self):
-        pass
+        if len(self.__collection) != 0:
+            return self.__collection.pop(0)
 
     def pop_right(self):
-        pass
+        if len(self.__collection) != 0:
+            return self.__collection.pop(-1)
 
     def clear(self):
-        pass
+        self.__collection.clear()
